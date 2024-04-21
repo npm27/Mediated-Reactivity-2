@@ -1,5 +1,5 @@
 Cue,Answer,Shuffle,Stimuli Notes,Value
-DAYS,WEAKS,BUFFER3,Buffer,1
+DAYS,WEEKS,BUFFER3,Buffer,1
 MONTH,YEAR,BUFFER3,Buffer,2
 TOOL,SHED,BUFFER3,Buffer,3
 SPRING,MARCH,BUFFER3,Buffer,4
@@ -48,7 +48,7 @@ LEASE                    ,TOIL                     ,Study2,U,46
 BOTH                     ,OUNCE                    ,Study2,U,47
 ARTERY                   ,BRONZE                   ,Study2,U,48
 MIRROR,CHILDREN,Study2,U,49
-CASH,LEG,Study2,U,50
+CASH,STUDY,Study2,U,50
 CARROT,POTATO,BUFFER4,Buffer,51
 NOODLE,STRING,BUFFER4,Buffer,52
 SHRIMP,FISH,BUFFER4,Buffer,53
