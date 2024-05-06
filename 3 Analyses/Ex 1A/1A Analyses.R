@@ -48,6 +48,8 @@ combined = subset(combined,
                   combined$id != "M20336988") #total performance < 5% (0's across the board... sigh... again...) (JOL group)
 combined = subset(combined,
                   combined$id != "w10172909kbk") #Also very low performance (JOL group)
+combined = subset(combined,
+                  combined$id != "w10140071lj") #Also very low performance (JOL group)
 
 
 Combined = subset(combined,
@@ -55,7 +57,13 @@ Combined = subset(combined,
 combined = subset(combined,
               combined$id != "M20317375_ESA") #>95% on all categories (Read group))
 combined = subset(combined,
-                  combined$id != "M20319628") #>Very low performance (Read group)
+                  combined$id != "M20319628") #Very low performance (Read group)
+combined = subset(combined,
+                  combined$id != "m20327840_bkc") #>95%
+combined = subset(combined,
+                  combined$id != "M20317671ajb") #>95%
+combined = subset(combined,
+                  combined$id != "cooforah0923") #>95%
 
 ##any difference in JOLs?
 JOL3 = JOL[ , -c(2:4, 6, 8:9, 11, 13:14)]
@@ -151,7 +159,7 @@ temp$statistic #sig!
 temp = t.test(jol.ph$M, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
-temp$statistic #marginal = .054
+temp$statistic #marginal = .02
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 #unrelated
