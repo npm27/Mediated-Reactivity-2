@@ -12,16 +12,17 @@ library(psychReport)
 options(scipen = 999)
 
 ##drop unused columns
-JOL2 = JOL[ , -c(2:4, 6, 8:9, 11:14)]
-Read2 = Read[ , -c(2:4, 6, 8:9, 11:13)]
+JOL2 = JOL[ , -c(2:4, 6, 8:9, 11, 13:14)]
+Read2 = Read[ , -c(2:4, 6, 8:9, 11, 13)]
 
 #slap together and rearrange columns
 combined = rbind(JOL2, Read2)
 
-combined = combined[ , c(1, 3, 4, 2)]
+combined = combined[ , c(1, 3, 4, 5, 2)]
 
 #rename columns
-colnames(combined)[c(2:4)] = c("encoding", "direction", "score")
+colnames(combined)[c(2:3)] = c("encoding", "direction")
+colnames(combined)[5] = "score"
 
 #get score on correct scale
 combined$score = combined$score * 100
@@ -40,7 +41,6 @@ Read3 = subset(combined,
 JOL.wide = cast(JOL4, id ~ direction, mean)
 Read.wide = cast(Read3, id ~ direction, mean)
 
-
 ##drops
 combined = subset(combined,
                   combined$id != "w10164530_bam") #total performance < 5% (0's across the board... sigh...) (JOL group)
@@ -50,7 +50,6 @@ combined = subset(combined,
                   combined$id != "w10172909kbk") #Also very low performance (JOL group)
 combined = subset(combined,
                   combined$id != "w10140071lj") #Also very low performance (JOL group)
-
 
 Combined = subset(combined,
                   combined$id != "M20344836") #> 95% on all categories (Read group)
@@ -66,7 +65,7 @@ combined = subset(combined,
                   combined$id != "cooforah0923") #>95%
 
 ##any difference in JOLs?
-JOL3 = JOL[ , -c(2:4, 6, 8:9, 11, 13:14)]
+JOL3 = JOL[ , -c(2:4, 6, 8:9, 11, 12, 14)]
 
 JOL3 = subset(JOL3,
                   JOL3$id != "w10164530_bam")
@@ -74,6 +73,10 @@ JOL3 = subset(JOL3,
               JOL3$id != "M20336988")
 JOL3 = subset(JOL3,
                   JOL3$id != "w10172909kbk")
+JOL3 = subset(JOL3,
+              JOL3$id != "20330829")
+JOL3 = subset(JOL3,
+              JOL3$id != "w10140071lj")
 
 
 #Remove out of range JOLs
@@ -95,7 +98,7 @@ model1$ANOVA$MSE
 
 aovEffectSize(model1, effectSize = "pes")
 
-#Everything is already significant
+#Main effect direction, sig interaction
 
 ####Post hocs####
 tapply(combined$score, combined$encoding, mean) #main effect encoding
@@ -159,7 +162,7 @@ temp$statistic #sig!
 temp = t.test(jol.ph$M, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
-temp$statistic #marginal = .02
+temp$statistic #sig = .01
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 #unrelated
@@ -185,5 +188,23 @@ ezANOVA(pbic3,
         detailed = T,
         type = 3)
 
-length(unique(jol.ph$id)) #48
-length(unique(read.ph$id)) #48
+length(unique(jol.ph$id)) #62
+length(unique(read.ph$id)) #63
+
+##get mean recall and RTs
+#start w/ means
+apply(read.ph, 2, mean)
+apply(jol.ph, 2, mean)
+
+apply(read.ph, 2, sd)
+apply(jol.ph, 2, sd)
+
+#Now RTs
+jol.ph.rt = cast(jol3, id ~ direction, mean, value = "Response.RT")
+read.ph.rt = cast(read3, id ~ direction, mean, value = "Response.RT")
+
+apply(read.ph.rt, 2, mean)
+apply(jol.ph.rt, 2, mean)
+
+apply(read.ph.rt, 2, sd)
+apply(jol.ph.rt, 2, sd)

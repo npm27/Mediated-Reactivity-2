@@ -69,7 +69,7 @@ dat.R = dat.Recall[ , c(12:14)]
 
 #Drop overlapping columns and clean things up
 JOL = cbind(dat.JOL, dat.R)
-JOL = JOL[ , -c(11, 13:14)]
+JOL = JOL[ , -c(11, 14, 17)]
 
 JOL = JOL[ , -c(9:10)]
 JOL = JOL[ , -2]
@@ -95,7 +95,7 @@ dat2.R = dat2.Recall[ , c(12:14)]
 
 #Drop overlapping columns and clean things up
 Study = cbind(dat2.Study, dat2.R)
-Study = Study[ , -c(11, 13:14)]
+Study = Study[ , -c(11, 14, 16)]
 
 Study = Study[ , -c(9:10)]
 Study = Study[ , -2]
