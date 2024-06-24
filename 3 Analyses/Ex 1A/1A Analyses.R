@@ -98,9 +98,7 @@ model1$ANOVA$MSE
 
 aovEffectSize(model1, effectSize = "pes")
 
-#Main effect direction, sig interaction
-
-####Post hocs####
+####comparisons####
 tapply(combined$score, combined$encoding, mean) #main effect encoding
 tapply(combined$score, combined$direction, mean) #main effect direction
 tapply(combined$score, list(combined$encoding, combined$direction), mean, na.rm = T) #Interaction
@@ -128,6 +126,8 @@ temp
 round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+sd(combined.direction$M); sd(combined.direction$U)
 
 ##get d
 mean(combined.direction$M); sd(combined.direction$M)
@@ -158,12 +158,16 @@ round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
+sd(jol.ph$F); sd(read.ph$F)
+
 ##mediated
 temp = t.test(jol.ph$M, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
 temp$statistic #sig = .01
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+sd(jol.ph$M); sd(read.ph$M)
 
 #unrelated
 temp = t.test(jol.ph$U, read.ph$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
