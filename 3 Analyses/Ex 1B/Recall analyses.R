@@ -35,8 +35,6 @@ JOL3$Response.JOL[JOL3$Response.JOL > 100] = NA
 
 tapply(JOL3$Response.JOL, JOL3$Stimuli.Stimuli.Notes, mean, na.rm = T)
 
-
-
 ####Outliers####
 summary(combined)
 
@@ -52,7 +50,8 @@ Read.wide = cast(Read3, id ~ direction, mean)
 ##drops
 combined = subset(combined,
                   combined$id != "w10141665_ljd") #correctly recalled basically all pair types -- suggests cheating
-
+combined = subset(combined,
+                  combined$id != "w10186913_mnr") #correctly recalled basically all pair types -- suggests cheating
 combined = subset(combined,
                   combined$id != "w10126861SES") #recalled less than 5% across all categories -- suggests not paying attention
 
@@ -130,12 +129,16 @@ round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
+sd(jol.ph$F); sd(read.ph$F)
+
 ##mediated
 temp = t.test(jol.ph$M, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
-temp$statistic #sig = .02
+temp$statistic #sig = .003
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+sd(jol.ph$M); sd(read.ph$M)
 
 #unrelated
 temp = t.test(jol.ph$U, read.ph$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
@@ -160,5 +163,10 @@ ezANOVA(pbic3,
         detailed = T,
         type = 3)
 
-length(unique(jol.ph$id))
-length(unique(read.ph$id))
+#get ns
+length(unique(jol.ph$id)) #56
+length(unique(read.ph$id)) #59
+
+##get CIs
+(apply(jol.ph, 2, sd) / sqrt(nrow(jol.ph))) * 1.96
+(apply(read.ph, 2, sd) / sqrt(nrow(read.ph))) * 1.96

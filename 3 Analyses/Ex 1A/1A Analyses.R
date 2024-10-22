@@ -84,6 +84,16 @@ JOL3$Response.JOL[JOL3$Response.JOL > 100] = NA
 
 tapply(JOL3$Response.JOL, JOL3$Stimuli.Stimuli.Notes, mean, na.rm = T)
 
+JOL3.wide = cast(JOL3, id ~ Stimuli.Stimuli.Notes, mean, na.rm = T)
+
+temp = t.test(JOL3.wide$M, JOL3.wide$U, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
+temp
+round(temp$p.value, 3)
+temp$statistic #sig!
+(temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+sd(JOL3.wide$M); sd(JOL3.wide$U, na.rm = T)
+
 ####Run the Anova####
 model1 = ezANOVA(combined,
                  dv = score,
@@ -195,13 +205,9 @@ ezANOVA(pbic3,
 length(unique(jol.ph$id)) #62
 length(unique(read.ph$id)) #63
 
-##get mean recall and RTs
-#start w/ means
-apply(read.ph, 2, mean)
-apply(jol.ph, 2, mean)
-
-apply(read.ph, 2, sd)
-apply(jol.ph, 2, sd)
+##Get CIs for table
+(apply(jol.ph, 2, sd) / sqrt(nrow(jol.ph))) * 1.96
+(apply(read.ph, 2, sd) / sqrt(nrow(read.ph))) * 1.96
 
 #Now RTs
 jol.ph.rt = cast(jol3, id ~ direction, mean, value = "Response.RT")
