@@ -115,12 +115,12 @@ JOL$Response.Response = tolower(JOL$Response.Response)
 Study$Response.Response = tolower(Study$Response.Response)
 
 #now write to .csv for scoring
-length(unique(JOL$Username)) #22
-length(unique(Study$Username)) #22
+length(unique(JOL$Username)) #35
+length(unique(Study$Username)) #33
 
 #add source
 JOL$source = rep("USM")
 Study$source = rep("USM")
 
-#write.csv(JOL[ , c(1, 12, 5, 2:4, 6:11)], file = "JOL_pre_scored_usm.csv", row.names = F)
-#write.csv(Study[ , c(1, 11, 5, 2:4, 6:10)], file = "Study_pre_scored_usm.csv", row.names = F)
+#write.csv(JOL[ , c(1, 12, 5, 2:4, 6:11, 13)], file = "JOL_pre_scored_usm.csv", row.names = F)
+#write.csv(Study[ , c(1, 11, 5, 2:4, 6:10, 12)], file = "Study_pre_scored_usm.csv", row.names = F)

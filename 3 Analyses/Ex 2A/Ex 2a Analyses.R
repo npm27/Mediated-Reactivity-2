@@ -11,12 +11,12 @@ library(psychReport)
 options(scipen = 999)
 
 ##set up the dataframe
-JOL = JOL[ , -c(2:4, 6, 8, 11, 14)] #need to tweak once source codings are available
+JOL = JOL[ , -c(2:4, 6, 8, 11, 14)]
 Read = Read[ , -c(2:4, 6, 8, 11, 13)]
 
 ##get ns
-length(unique(JOL$id)) #41
-length(unique(Read$id)) #35
+length(unique(JOL$id)) #53
+length(unique(Read$id)) #51
 
 colnames(JOL)[3] = "Encoding_Group"
 colnames(JOL)[4] = "Block"
@@ -42,6 +42,9 @@ JOL.wide2 = cast(JOL, id ~ Direction, value = "JOL", mean, na.rm = T) #2 partici
 JOL = subset(JOL,
              id != "M20297698AL" & id != "M20298373")
 
+Read = subset(Read,
+              id != "w10182202_WKK")
+
 ##put everything together
 combined = rbind(JOL[ , -7], Read)
 
@@ -50,6 +53,42 @@ combined = combined[ , c(1, 3:5, 6, 2)]
 ####Descriptives####
 tapply(combined$Scored, list(combined$Encoding_Group, combined$Direction), mean) #reactivity patterns (recall)
 tapply(JOL$JOL, JOL$Direction, mean, na.rm = T) #okay, we've eliminated the JOL issue! (JOLs are equivalent between M and U!)
+
+##test JOLs
+JOL2 = na.omit(JOL)
+
+mod.jol = ezANOVA(JOL2,
+                  wid = id,
+                  dv = JOL,
+                  between = Direction,
+                  type = 3,
+                  detailed = T)
+
+mod.jol #overall is sig
+
+JOL.wide3 = cast(JOL2, id ~ Direction, value = "JOL", mean, na.rm = T)
+
+#F vs M
+temp = t.test(JOL.wide3$F, JOL.wide3$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp
+round(temp$p.value, 3)
+temp$statistic #sig!
+(temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+#F vs U
+temp = t.test(JOL.wide3$F, JOL.wide3$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp
+round(temp$p.value, 3)
+temp$statistic #sig!
+(temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+#M vs U
+temp = t.test(JOL.wide3$M, JOL.wide3$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp
+round(temp$p.value, 3)
+temp$statistic #sig!
+(temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
 
 ####Run the ANOVAs####
 model1 = ezANOVA(combined,
@@ -141,7 +180,7 @@ sd(jol.ph$M); sd(read.ph$M)
 temp = t.test(jol.ph$U, read.ph$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
-temp$statistic #Non-Sig
+temp$statistic #sig -- actual negative reactivity in the flesh!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 #get pbic
@@ -160,8 +199,8 @@ ezANOVA(pbic3,
         detailed = T,
         type = 3)
 
-length(unique(jol.ph$id)) #32
-length(unique(read.ph$id)) #30
+length(unique(jol.ph$id)) #51
+length(unique(read.ph$id)) #50
 
 ##Get CIs for table
 (apply(jol.ph, 2, sd) / sqrt(nrow(jol.ph))) * 1.96
