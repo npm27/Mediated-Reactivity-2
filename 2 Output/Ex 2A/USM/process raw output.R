@@ -115,8 +115,8 @@ JOL$Response.Response = tolower(JOL$Response.Response)
 Study$Response.Response = tolower(Study$Response.Response)
 
 #now write to .csv for scoring
-length(unique(JOL$Username)) #35
-length(unique(Study$Username)) #33
+length(unique(JOL$Username)) #34
+length(unique(Study$Username)) #32
 
 #add source
 JOL$source = rep("USM")
