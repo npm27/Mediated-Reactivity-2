@@ -38,10 +38,16 @@ JOL.wide2 = cast(JOL, id ~ Direction, value = "JOL", mean, na.rm = T)
 
 #drop them
 JOL = subset(JOL,
-             id != "M20344324_DBW" & id != "W10037931andAH" & id != "m20338775NPD")
+             id != "w10191338" & id != "w10184950DT" & id != "w10182464")
+
+#dt > 95%
+#91338 and 1464 < 5%
 
 Read = subset(Read,
-              id != "w10175528_CLJ" & id != "M20343281ega" & id != "10179740DJ")
+              id != "w10175528_CLJ" & id != "M20343281ega" & id != "M20223504BG" )
+
+#CLJ, BG < 5%
+#ega > 95%
 
 ##put everything together
 combined = rbind(JOL[ , -7], Read)
@@ -98,7 +104,7 @@ model1 = ezANOVA(combined,
                  within = Direction,
                  type = 3,
                  detailed = T)
-model1 #already getting significant everything!
+model1
 
 model1$ANOVA$MSE = model1$ANOVA$SSd/model1$ANOVA$DFd
 model1$ANOVA$MSE
@@ -171,7 +177,7 @@ sd(jol.ph$F); sd(read.ph$F)
 temp = t.test(jol.ph$M, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
-temp$statistic #sig!
+temp$statistic 
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 sd(jol.ph$M); sd(read.ph$M)
@@ -199,8 +205,8 @@ ezANOVA(pbic3,
         detailed = T)
 
 #post cleaning group sizes
-length(unique(jol.ph$id)) #35
-length(unique(read.ph$id)) #38
+length(unique(jol.ph$id)) #64
+length(unique(read.ph$id)) #62
 
 ##Get CIs for table
 (apply(jol.ph, 2, sd) / sqrt(nrow(jol.ph))) * 1.96
