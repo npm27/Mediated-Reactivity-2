@@ -166,7 +166,7 @@ round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
-sd(jol.ph$F); sd(read.ph$F) #d = 0.68
+sd(jol.ph$F); sd(read.ph$F)
 
 ##mediated
 temp = t.test(jol.ph$M, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
@@ -174,6 +174,8 @@ temp
 round(temp$p.value, 3)
 temp$statistic 
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+sd(jol.ph$M); sd(read.ph$M)
 
 pbic1 = jol.ph[ , c(1,3)]
 pbic2 = read.ph[ , c(1,3)]

@@ -54,7 +54,7 @@ combined = combined[ , c(1, 3:5, 6, 2)]
 
 ####Descriptives####
 tapply(combined$Scored, list(combined$Encoding_Group, combined$Direction), mean) #reactivity patterns (recall)
-tapply(JOL$JOL, JOL$Direction, mean, na.rm = T) #okay, we've eliminated the JOL issue! (JOLs are equivalent between M and U!)
+tapply(JOL$JOL, JOL$Direction, mean, na.rm = T) #okay, we've reduced the JOL issue! (JOLs are equivalent between M and U!)
 
 ##test JOLs
 JOL2 = na.omit(JOL)
@@ -71,25 +71,27 @@ mod.jol #overall is sig
 JOL.wide3 = cast(JOL2, id ~ Direction, value = "JOL", mean, na.rm = T)
 
 #F vs M
-temp = t.test(JOL.wide3$F, JOL.wide3$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp = t.test(JOL.wide3$F, JOL.wide3$M, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 #F vs U
-temp = t.test(JOL.wide3$F, JOL.wide3$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp = t.test(JOL.wide3$F, JOL.wide3$U, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 #M vs U
-temp = t.test(JOL.wide3$M, JOL.wide3$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp = t.test(JOL.wide3$M, JOL.wide3$U, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
 temp$statistic #marginal
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+sd(JOL.wide3$M); sd(JOL.wide3$U)
 
 #make recall a percent
 combined$Scored = combined$Scored * 100
