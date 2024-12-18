@@ -162,13 +162,13 @@ mean(jol.ph$F); mean(jol.ph$M)
 mean(read.ph$F); mean(read.ph$M)
 
 ##forward
-temp = t.test(jol.ph$F, read.ph$F, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp = t.test(read.ph$U, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
-sd(jol.ph$F); sd(read.ph$F)
+sd(read.ph$M); sd(read.ph$U)
 
 ##mediated
 temp = t.test(jol.ph$M, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)

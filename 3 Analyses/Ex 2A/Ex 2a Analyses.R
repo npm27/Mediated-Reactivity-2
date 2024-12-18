@@ -54,7 +54,7 @@ combined = combined[ , c(1, 3:5, 6, 2)]
 
 ####Descriptives####
 tapply(combined$Scored, list(combined$Encoding_Group, combined$Direction), mean) #reactivity patterns (recall)
-tapply(JOL$JOL, JOL$Direction, mean, na.rm = T) #okay, we've reduced the JOL issue! (JOLs are equivalent between M and U!)
+tapply(JOL$JOL, JOL$Direction, mean, na.rm = T)
 
 ##test JOLs
 JOL2 = na.omit(JOL)
