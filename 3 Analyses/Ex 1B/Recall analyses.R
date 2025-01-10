@@ -35,6 +35,9 @@ JOL3$Response.JOL[JOL3$Response.JOL > 100] = NA
 
 tapply(JOL3$Response.JOL, JOL3$Stimuli.Stimuli.Notes, mean, na.rm = T)
 
+JOL3.wide = cast(JOL3, id ~ Stimuli.Stimuli.Notes, mean, na.rm = T)
+sd(JOL3.wide$M); sd(JOL3.wide$U, na.rm = T)
+
 ####Outliers####
 summary(combined)
 
