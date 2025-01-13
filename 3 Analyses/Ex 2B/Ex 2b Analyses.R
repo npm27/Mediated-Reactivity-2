@@ -70,6 +70,8 @@ mod.jol #overall is sig
 
 JOL.wide3 = cast(JOL2, id ~ Direction, value = "JOL", mean, na.rm = T)
 
+sd(JOL.wide3$M); sd(JOL.wide3$U)
+
 #F vs M
 temp = t.test(JOL.wide3$F, JOL.wide3$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
