@@ -1,0 +1,63 @@
+Item,Trial Type,Max Time,Min Time,Text,Procedure Notes,Shuffle
+0,Instruct,-,5,"In this section, you will be presented with a series of word pairs. We are interested in how related you perceive the words in each pair to be.",Initial_Instruct,Instruct1
+0,Instruct,-,5,"Specifically, you will be asked to rate how often the words in each pair are used together. Assume 100 college students from around the nation gave responses to each CUE (first) word. How many of these 100 students do you think would have given the RESPONSE (second) word?",,Instruct13
+0,Instruct,-,5,"For example, if you are given the pair CAT - DOG, a rating of 0 indicates that DOG is not a commonly given response to the word CAT, while a score of 100 indicates that DOG would be a common response.",,Instruct14
+0,Instruct,-,5,"When making your ratings, it is criticial that you use the full range of the scale. You will be disqualified for only giving ratings of 0 or 100! After making your rating, you will press Enter to advance to the next pair.",,Instruct15
+0,Instruct,User,-,"Before starting the study, you will complete a short practice session to get familiar with the judgment task. Press Enter when you are ready to begin.",,Instruct16
+2,JAM,User,-,,Study/JOL,Practice
+3,JAM,User,-,,Study/JOL,Practice
+4,JAM,User,-,,Study/JOL,Practice
+5,JAM,User,-,,Study/JOL,Practice
+6,JAM,User,-,,Study/JOL,Practice
+0,Instruct,User,-,You will now begin the study. Press Enter when you are ready to begin.,,Instruct_Full_task
+7,JAM,User,-,,Study/JOL,JAM_Rating
+8,JAM,User,-,,Study/JOL,JAM_Rating
+9,JAM,User,-,,Study/JOL,JAM_Rating
+10,JAM,User,-,,Study/JOL,JAM_Rating
+11,JAM,User,-,,Study/JOL,JAM_Rating
+12,JAM,User,-,,Study/JOL,JAM_Rating
+13,JAM,User,-,,Study/JOL,JAM_Rating
+14,JAM,User,-,,Study/JOL,JAM_Rating
+15,JAM,User,-,,Study/JOL,JAM_Rating
+16,JAM,User,-,,Study/JOL,JAM_Rating
+17,JAM,User,-,,Study/JOL,JAM_Rating
+18,JAM,User,-,,Study/JOL,JAM_Rating
+19,JAM,User,-,,Study/JOL,JAM_Rating
+20,JAM,User,-,,Study/JOL,JAM_Rating
+21,JAM,User,-,,Study/JOL,JAM_Rating
+22,JAM,User,-,,Study/JOL,JAM_Rating
+23,JAM,User,-,,Study/JOL,JAM_Rating
+24,JAM,User,-,,Study/JOL,JAM_Rating
+25,JAM,User,-,,Study/JOL,JAM_Rating
+26,JAM,User,-,,Study/JOL,JAM_Rating
+27,JAM,User,-,,Study/JOL,JAM_Rating
+28,JAM,User,-,,Study/JOL,JAM_Rating
+29,JAM,User,-,,Study/JOL,JAM_Rating
+30,JAM,User,-,,Study/JOL,JAM_Rating
+31,JAM,User,-,,Study/JOL,JAM_Rating
+32,JAM,User,-,,Study/JOL,JAM_Rating
+33,JAM,User,-,,Study/JOL,JAM_Rating
+34,JAM,User,-,,Study/JOL,JAM_Rating
+35,JAM,User,-,,Study/JOL,JAM_Rating
+36,JAM,User,-,,Study/JOL,JAM_Rating
+37,JAM,User,-,,Study/JOL,JAM_Rating
+38,JAM,User,-,,Study/JOL,JAM_Rating
+39,JAM,User,-,,Study/JOL,JAM_Rating
+40,JAM,User,-,,Study/JOL,JAM_Rating
+41,JAM,User,-,,Study/JOL,JAM_Rating
+42,JAM,User,-,,Study/JOL,JAM_Rating
+43,JAM,User,-,,Study/JOL,JAM_Rating
+44,JAM,User,-,,Study/JOL,JAM_Rating
+45,JAM,User,-,,Study/JOL,JAM_Rating
+46,JAM,User,-,,Study/JOL,JAM_Rating
+47,JAM,User,-,,Study/JOL,JAM_Rating
+48,JAM,User,-,,Study/JOL,JAM_Rating
+49,JAM,User,-,,Study/JOL,JAM_Rating
+50,JAM,User,-,,Study/JOL,JAM_Rating
+62,JAM,User,-,,Study/JOL,JAM_Rating
+63,JAM,User,-,,Study/JOL,JAM_Rating
+64,JAM,User,-,,Study/JOL,JAM_Rating
+65,JAM,User,-,,Study/JOL,JAM_Rating
+66,JAM,User,-,,Study/JOL,JAM_Rating
+0,Instruct,User,-,You have completed this section. Please press Enter.,,Instruct7
+0,Instruct,User,-,The following screen will ask you a few questions abour your experience today. You must complete these questions to receive credit.,,Instruct8
