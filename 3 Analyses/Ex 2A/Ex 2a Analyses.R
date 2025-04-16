@@ -70,6 +70,14 @@ mod.jol #overall is sig
 
 JOL.wide3 = cast(JOL2, id ~ Direction, value = "JOL", mean, na.rm = T)
 
+apply(JOL.wide3, 2, mean)
+
+#SDS
+apply(JOL.wide3, 2, sd)
+
+#95% Ci
+(apply(JOL.wide3, 2, sd) / sqrt(nrow(JOL.wide3))) * 1.96
+
 #F vs M
 temp = t.test(JOL.wide3$F, JOL.wide3$M, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
 temp
@@ -88,7 +96,7 @@ temp$statistic #sig!
 temp = t.test(JOL.wide3$M, JOL.wide3$U, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
-temp$statistic #marginal
+temp$statistic
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 sd(JOL.wide3$M); sd(JOL.wide3$U)

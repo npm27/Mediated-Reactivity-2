@@ -36,7 +36,12 @@ JOL3$Response.JOL[JOL3$Response.JOL > 100] = NA
 tapply(JOL3$Response.JOL, JOL3$Stimuli.Stimuli.Notes, mean, na.rm = T)
 
 JOL3.wide = cast(JOL3, id ~ Stimuli.Stimuli.Notes, mean, na.rm = T)
-sd(JOL3.wide$M); sd(JOL3.wide$U, na.rm = T)
+
+#SDS
+apply(JOL3.wide, 2, sd)
+
+#95% Ci
+(apply(JOL3.wide, 2, sd) / sqrt(nrow(JOL3.wide))) * 1.96
 
 ####Outliers####
 summary(combined)

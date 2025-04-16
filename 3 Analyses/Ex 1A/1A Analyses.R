@@ -82,6 +82,7 @@ JOL3 = subset(JOL3,
 #Remove out of range JOLs
 JOL3$Response.JOL[JOL3$Response.JOL > 100] = NA
 
+##get mean JOLs
 tapply(JOL3$Response.JOL, JOL3$Stimuli.Stimuli.Notes, mean, na.rm = T)
 
 JOL3.wide = cast(JOL3, id ~ Stimuli.Stimuli.Notes, mean, na.rm = T)
@@ -92,7 +93,11 @@ round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
-sd(JOL3.wide$M); sd(JOL3.wide$U, na.rm = T)
+#SDS
+apply(JOL3.wide, 2, sd)
+
+#95% Ci
+(apply(JOL3.wide, 2, sd) / sqrt(nrow(JOL3.wide))) * 1.96
 
 ####Run the Anova####
 model1 = ezANOVA(combined,

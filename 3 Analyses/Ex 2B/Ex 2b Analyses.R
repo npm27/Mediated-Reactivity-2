@@ -70,27 +70,33 @@ mod.jol #overall is sig
 
 JOL.wide3 = cast(JOL2, id ~ Direction, value = "JOL", mean, na.rm = T)
 
-sd(JOL.wide3$M); sd(JOL.wide3$U)
+apply(JOL.wide3, 2, mean)
+
+#SDS
+apply(JOL.wide3, 2, sd)
+
+#95% Ci
+(apply(JOL.wide3, 2, sd) / sqrt(nrow(JOL.wide3))) * 1.96
 
 #F vs M
-temp = t.test(JOL.wide3$F, JOL.wide3$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp = t.test(JOL.wide3$F, JOL.wide3$M, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 #F vs U
-temp = t.test(JOL.wide3$F, JOL.wide3$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp = t.test(JOL.wide3$F, JOL.wide3$U, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 #M vs U
-temp = t.test(JOL.wide3$M, JOL.wide3$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp = t.test(JOL.wide3$M, JOL.wide3$U, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
-temp$statistic #marginal
+temp$statistic 
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 ####Run the ANOVAs####
@@ -223,3 +229,7 @@ length(unique(read.ph$id)) #59
 ##Get CIs for table
 (apply(jol.ph, 2, sd) / sqrt(nrow(jol.ph))) * 1.96
 (apply(read.ph, 2, sd) / sqrt(nrow(read.ph))) * 1.96
+
+
+####Get RTs####
+tapply(combined$Response.RT, list(combined$Encoding_Group, combined$Direction), mean)
