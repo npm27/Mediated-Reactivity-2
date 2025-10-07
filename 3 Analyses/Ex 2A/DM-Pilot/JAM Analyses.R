@@ -66,6 +66,25 @@ round(temp$p.value, 3)
 temp$statistic #Non-sig
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
+#get pbic
+pbic1 = dat.long[ , c(1, 3)]
+pbic2 = dat.long[ , c(1, 4)]
+
+colnames(pbic1)[2] = "score"
+colnames(pbic2)[2] = "score"
+
+pbic1$pair = rep("M")
+pbic2$pair = rep("u")
+
+pbic3 = rbind(pbic1, pbic2)
+
+ezANOVA(pbic3,
+        wid = Username,
+        between = pair,
+        dv = score,
+        type = 3,
+        detailed = T)
+
 #d 0.22
 
 ####get means and sd for cohen's d####

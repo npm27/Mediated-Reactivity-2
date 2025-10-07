@@ -99,6 +99,25 @@ apply(JOL3.wide, 2, sd)
 #95% Ci
 (apply(JOL3.wide, 2, sd) / sqrt(nrow(JOL3.wide))) * 1.96
 
+##pBIC
+pbic1 = JOL3.wide[ , c(1, 3)]
+pbic2 = JOL3.wide[ , c(1, 4)]
+
+colnames(pbic1)[2] = "score"
+colnames(pbic2)[2] = "score"
+
+pbic1$pair = rep("M")
+pbic2$pair = rep("u")
+
+pbic3 = rbind(pbic1, pbic2)
+
+ezANOVA(pbic3,
+        wid = id,
+        within = pair,
+        dv = score,
+        type = 3,
+        detailed = T)
+
 ####Run the Anova####
 model1 = ezANOVA(combined,
                  dv = score,
@@ -148,6 +167,25 @@ sd(combined.direction$M); sd(combined.direction$U)
 mean(combined.direction$M); sd(combined.direction$M)
 mean(combined.direction$U); sd(combined.direction$U)
 
+##get pbics
+pbic1 = combined.direction[ , c(1, 3)]
+pbic2 = combined.direction[ , c(1, 4)]
+
+colnames(pbic1)[2] = "score"
+colnames(pbic2)[2] = "score"
+
+pbic1$pair = rep("M")
+pbic2$pair = rep("u")
+
+pbic3 = rbind(pbic1, pbic2)
+
+ezANOVA(pbic3,
+        wid = id,
+        within = pair,
+        dv = score,
+        type = 3,
+        detailed = T)
+
 #Not surprisingly, everything is sig!
 
 ###Interaction
@@ -167,13 +205,29 @@ mean(jol.ph$F); mean(jol.ph$M)
 mean(read.ph$F); mean(read.ph$M)
 
 ##forward
-temp = t.test(read.ph$U, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
+temp = t.test(read.ph$F, read.ph$F, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
 temp$statistic #sig!
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
-sd(read.ph$M); sd(read.ph$U)
+sd(read.ph$F); sd(read.ph$F)
+
+#get pbic
+pbic1 = jol.ph[ , c(1, 2)]
+pbic2 = read.ph[ , c(1, 2)]
+
+pbic1$encoding = rep("JOL")
+pbic2$encoding = rep("read")
+
+pbic3 = rbind(pbic1, pbic2)
+
+ezANOVA(pbic3,
+        dv = F,
+        wid = id,
+        between = encoding,
+        detailed = T,
+        type = 3)
 
 ##mediated
 temp = t.test(jol.ph$M, read.ph$M, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
@@ -184,12 +238,30 @@ temp$statistic #sig = .01
 
 sd(jol.ph$M); sd(read.ph$M)
 
+#get pbic
+pbic1 = jol.ph[ , c(1, 3)]
+pbic2 = read.ph[ , c(1, 3)]
+
+pbic1$encoding = rep("JOL")
+pbic2$encoding = rep("read")
+
+pbic3 = rbind(pbic1, pbic2)
+
+ezANOVA(pbic3,
+        dv = M,
+        wid = id,
+        between = encoding,
+        detailed = T,
+        type = 3)
+
 #unrelated
 temp = t.test(jol.ph$U, read.ph$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
 temp$statistic #Non-Sig
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+sd(jol.ph$U); sd(read.ph$U)
 
 #get pbic
 pbic1 = jol.ph[ , c(1, 4)]
@@ -214,7 +286,7 @@ length(unique(read.ph$id)) #63
 (apply(jol.ph, 2, sd) / sqrt(nrow(jol.ph))) * 1.96
 (apply(read.ph, 2, sd) / sqrt(nrow(read.ph))) * 1.96
 
-#Now RTs
+###Now RTs####
 jol.ph.rt = cast(jol3, id ~ direction, mean, value = "Response.RT")
 read.ph.rt = cast(read3, id ~ direction, mean, value = "Response.RT")
 
@@ -223,3 +295,88 @@ apply(jol.ph.rt, 2, mean)
 
 apply(read.ph.rt, 2, sd)
 apply(jol.ph.rt, 2, sd)
+
+##run the analysis
+modelRT = ezANOVA(combined,
+                 dv = Response.RT,
+                 between = encoding,
+                 within = direction,
+                 wid = id,
+                 type = 3,
+                 detailed = T)
+
+modelRT$ANOVA$MSE = modelRT$ANOVA$SSd/modelRT$ANOVA$DFd
+modelRT$ANOVA$MSE
+
+aovEffectSize(modelRT, effectSize = "pes")
+
+##Main effects and interactions
+tapply(combined$Response.RT, combined$direction, mean)
+tapply(combined$Response.RT, combined$encoding, mean)
+
+#build the post-hoc dataset
+combined.RT.wide = cast(combined, id ~ direction, value = "Response.RT", mean)
+
+##F vs M
+temp = t.test(combined.RT.wide$F, combined.RT.wide$M, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
+temp
+round(temp$p.value, 3)
+temp$statistic
+(temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+##F vs u
+temp = t.test(combined.RT.wide$F, combined.RT.wide$U, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
+temp
+round(temp$p.value, 3)
+temp$statistic
+(temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+sd(combined.RT.wide$F); sd(combined.RT.wide$U)
+
+pbic1 = combined.RT.wide[ ,c(1, 2)]
+pbic2 = combined.RT.wide[ ,c(1, 4)]
+
+colnames(pbic1)[2] = "RT"
+colnames(pbic2)[2] = "RT"
+
+pbic1$direction = rep("F")
+pbic2$direction = rep("U")
+
+pbic3 = rbind(pbic1, pbic2)
+
+ezANOVA(pbic3,
+        wid = id,
+        within = direction,
+        dv = RT,
+        type = 3,
+        detailed = T)
+
+##U vs M
+temp = t.test(combined.RT.wide$U, combined.RT.wide$M, paired = T, p.adjust.methods = "bonferroni", var.equal = T)
+temp
+round(temp$p.value, 3)
+temp$statistic
+(temp$conf.int[2] - temp$conf.int[1]) / 3.92
+
+pbic1 = combined.RT.wide[ ,c(1, 3)]
+pbic2 = combined.RT.wide[ ,c(1, 4)]
+
+colnames(pbic1)[2] = "RT"
+colnames(pbic2)[2] = "RT"
+
+pbic1$direction = rep("M")
+pbic2$direction = rep("U")
+
+pbic3 = rbind(pbic1, pbic2)
+
+ezANOVA(pbic3,
+        wid = id,
+        within = direction,
+        dv = RT,
+        type = 3,
+        detailed = T)
+
+####Write cleaned data to file for pooled analyses####
+combined$experiment = rep("Ex1A")
+
+#write.csv(combined, file = "Ex1A.csv", row.names = F)

@@ -113,8 +113,8 @@ JOL$Response.Response = tolower(JOL$Response.Response)
 Study$Response.Response = tolower(Study$Response.Response)
 
 #now write to .csv for scoring
-length(unique(JOL$Username)) #29
-length(unique(Study$Username)) #30
+length(unique(JOL$Username))
+length(unique(Study$Username))
 
 ##fix cases
 JOL$Stimuli.Answer = tolower(JOL$Stimuli.Answer)
