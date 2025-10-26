@@ -26,7 +26,15 @@ tapply(dat$JAM, dat$Direction, mean)
 dat.long = cast(dat, Username ~ Direction, mean) #looks good!
 
 dat = subset(dat,
-             dat$Username != "66e0878b8a2624c7a7339c19")
+             dat$Username != "5f5f13f22700567de69c661d")
+dat = subset(dat,
+             dat$Username != "662c0114735b9f2e17f0a8be")
+dat = subset(dat,
+             dat$Username != "5daa226125a3890016e53b07")
+dat = subset(dat,
+             dat$Username != "62b628e4351d179f1ff6cc59")
+dat = subset(dat,
+             dat$Username != "62b628e4351d179f1ff6cc59")
 
 dat.long = cast(dat, Username ~ Direction, mean) #looks good!
 
@@ -68,7 +76,7 @@ temp$statistic #sig!
 temp = t.test(dat.long$M, dat.long$U, paired = F, p.adjust.methods = "bonferroni", var.equal = T)
 temp
 round(temp$p.value, 3)
-temp$statistic #Non-sig
+temp$statistic #Sig
 (temp$conf.int[2] - temp$conf.int[1]) / 3.92
 
 #get pbic
@@ -90,8 +98,6 @@ ezANOVA(pbic3,
         type = 3,
         detailed = T)
 
-#d 0.22
-
 ####get means and sd for cohen's d####
 apply(dat.long, 2, mean)
-(apply(dat.long, 2, sd) / sqrt(40)) * 1.96
+(apply(dat.long, 2, sd) / sqrt(35)) * 1.96
