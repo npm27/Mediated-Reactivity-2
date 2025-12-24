@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-dat = pd.read_csv("Ex 2.csv")
+dat = pd.read_csv("Ex 1.csv")
 
 #make the 95% confidence intervals
 dat['diff'] = dat['Upper'].sub(dat['Lower']) #get the length of the bars
@@ -24,8 +24,8 @@ plt.subplots_adjust(hspace = 0.20)
 #fig.suptitle('Experiments 2-4: Recogniton Testing', fontsize = 24, fontweight = 'bold')
 
 ####Subset by Experiment####
-exA = dat[dat['Experiment'] == "2A"]
-exB = dat[dat['Experiment'] == "2B"]
+exA = dat[dat['Experiment'] == "1A"]
+exB = dat[dat['Experiment'] == "1B"]
 
 ####Experiment A####
 #subset by task
@@ -50,7 +50,7 @@ rects2 = ax1.bar(ind + width/2, s1_average, width, yerr = s1_conf, capsize = 3, 
                 label = 'No-JOL')
 
 #Make the plot spiffy
-ax1.set_title('Experiment 2A', fontsize = 40, fontweight = 'bold')
+ax1.set_title('Experiment 1A', fontsize = 40, fontweight = 'bold')
 ax1.set_ylabel('Mean % Cued-Recall', fontsize = 30, fontweight = 'bold')
 ax1.set_xlabel('Pair Type', fontsize = 36, fontweight = 'bold')
 #ax1.xaxis.labelpad = 0
@@ -83,15 +83,15 @@ rects4 = ax2.bar(ind + width/2, s2_average, width, yerr = s2_conf, capsize = 3, 
                 label = 'No-JOL')
 
 #Make the plot spiffy
-ax2.set_title('Experiment 2B', fontsize = 40, fontweight = 'bold')
+ax2.set_title('Experiment 1B', fontsize = 40, fontweight = 'bold')
 ax2.set_ylabel('Mean % Cued-Recall', fontsize = 30, fontweight = 'bold')
 ax2.set_xlabel('Pair Type', fontsize = 36, fontweight = 'bold')
 #ax1.xaxis.labelpad = 0
 ax2.set_xticks(ind)
-ax2.set_xticklabels(('Forward', 'Mediated', 'Unrelated'), fontsize = 32)
+ax2.set_xticklabels(('Forward', 'Backward Mediated', 'Unrelated'), fontsize = 32)
 ax2.tick_params(axis="y", labelsize = 32)
 ax2.legend(fontsize = 32)
 ax2.set_ylim([0,100])
 
 
-fig.savefig('EX2_chart.png', dip = 10000)
+fig.savefig('EX1_chart.png', dip = 10000)

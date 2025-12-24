@@ -101,3 +101,5 @@ ezANOVA(pbic3,
 ####get means and sd for cohen's d####
 apply(dat.long, 2, mean)
 (apply(dat.long, 2, sd) / sqrt(35)) * 1.96
+
+options(scipen = 999)
